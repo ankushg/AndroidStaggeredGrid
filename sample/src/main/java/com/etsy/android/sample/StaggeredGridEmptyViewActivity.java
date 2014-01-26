@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class StaggeredGridEmptyViewActivity extends Activity implements AbsListV
     public static final String SAVED_DATA_KEY = "SAVED_DATA";
     private static final int FETCH_DATA_TASK_DURATION = 2000;
 
-    private StaggeredGridView mGridView;
+    private GridView mGridView;
     private SampleAdapter mAdapter;
 
     private ArrayList<String> mData;
@@ -31,23 +32,13 @@ public class StaggeredGridEmptyViewActivity extends Activity implements AbsListV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sgv_empy_view);
-
-        setTitle("SGV");
-        mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        View header = layoutInflater.inflate(R.layout.list_item_header_footer, null);
-        View footer = layoutInflater.inflate(R.layout.list_item_header_footer, null);
-        TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
-        TextView txtFooterTitle =  (TextView) footer.findViewById(R.id.txt_title);
-        txtHeaderTitle.setText("THE HEADER!");
-        txtFooterTitle.setText("THE FOOTER!");
 
-        mGridView.addHeaderView(header);
-        mGridView.addFooterView(footer);
         mGridView.setEmptyView(findViewById(android.R.id.empty));
         mAdapter = new SampleAdapter(this, R.id.txt_line1);
+
+        mGridView = (GridView) findViewById(R.id.grid_view);
 
         // do we have saved data?
         if (savedInstanceState != null) {

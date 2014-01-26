@@ -16,6 +16,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_sgv).setOnClickListener(this);
         findViewById(R.id.btn_sgv_empty_view).setOnClickListener(this);
         findViewById(R.id.btn_listview).setOnClickListener(this);
+        startActivity(new Intent(this, StaggeredGridActivity.class));
+
     }
 
 

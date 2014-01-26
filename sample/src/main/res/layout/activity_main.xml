@@ -10,7 +10,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:layout_margin="16dp"
-        android:text="Staggered Grid View" />
+        android:text="Grid View" />
 
     <Button
         android:id="@+id/btn_sgv_empty_view"
@@ -19,7 +19,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:layout_margin="16dp"
-        android:text="Staggered Grid View with Empty View" />
+        android:text="Grid View with Empty View" />
 
     <Button
         android:id="@+id/btn_listview"

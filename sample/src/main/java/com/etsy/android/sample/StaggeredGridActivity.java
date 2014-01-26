@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
@@ -19,9 +19,9 @@ public class StaggeredGridActivity extends Activity implements AbsListView.OnScr
     private static final String TAG = "StaggeredGridActivity";
     public static final String SAVED_DATA_KEY = "SAVED_DATA";
 
-    private StaggeredGridView mGridView;
+    private AbsListView gridView;
     private boolean mHasRequestedMore;
-    private SampleAdapter mAdapter;
+    private SampleAdapter adapter;
 
     private ArrayList<String> mData;
 
@@ -30,22 +30,9 @@ public class StaggeredGridActivity extends Activity implements AbsListView.OnScr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sgv);
 
-        setTitle("SGV");
-        mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        View header = layoutInflater.inflate(R.layout.list_item_header_footer, null);
-        View footer = layoutInflater.inflate(R.layout.list_item_header_footer, null);
-        TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
-        TextView txtFooterTitle =  (TextView) footer.findViewById(R.id.txt_title);
-        txtHeaderTitle.setText("THE HEADER!");
-        txtFooterTitle.setText("THE FOOTER!");
-
-        mGridView.addHeaderView(header);
-        mGridView.addFooterView(footer);
-        mAdapter = new SampleAdapter(this, R.id.txt_line1);
-
+        adapter = new SampleAdapter(this, R.id.txt_line1);
         // do we have saved data?
         if (savedInstanceState != null) {
             mData = savedInstanceState.getStringArrayList(SAVED_DATA_KEY);
@@ -56,14 +43,18 @@ public class StaggeredGridActivity extends Activity implements AbsListView.OnScr
         }
 
         for (String data : mData) {
-            mAdapter.add(data);
+            adapter.add(data);
         }
 
-        mGridView.setAdapter(mAdapter);
+        setTitle("SGV");
+        GridView gridView = (GridView) findViewById(R.id.grid_view);
+        gridView.setAdapter(adapter);
 
-        mGridView.setOnScrollListener(this);
+        this.gridView = gridView;
 
-        mGridView.setOnItemClickListener(this);
+        this.gridView.setOnScrollListener(this);
+
+        this.gridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -96,12 +87,12 @@ public class StaggeredGridActivity extends Activity implements AbsListView.OnScr
     private void onLoadMoreItems() {
         final ArrayList<String> sampleData = SampleData.generateSampleData();
         for (String data : sampleData) {
-            mAdapter.add(data);
+            adapter.add(data);
         }
         // stash all the data in our backing store
         mData.addAll(sampleData);
         // notify the adapter that we can update now
-        mAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
         mHasRequestedMore = false;
     }
 
